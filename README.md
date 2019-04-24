@@ -8,4 +8,4 @@ They are randomly shuffled. The first value in each row is the class (1-6)
 4: palm
 5: sphere
 6: tip
-There are 3000 more values per row, these are mV values (time series, 500 Hz sampling).
+There are 3000 more values per row (so 3001 total), these are mV values (time series, 500 Hz sampling).
