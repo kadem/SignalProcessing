@@ -9,7 +9,7 @@ len = size(train);
 len = len(1);
 N = 200;
 for i=1:len
-    X = fft(train(i,2:end),N);
+    X = fft(train(i,:),N);
     X = X(1:N/2); %restricts X to positive domain only
     X1 = abs(X); %magnitude
     X1 = X1(2:end);
@@ -23,7 +23,7 @@ for i=1:len
 end
 
 for i=1:len
-    X = fft(test(i,2:end),N);
+    X = fft(test(i,:),N);
     X = X(1:N/2); %restricts X to positive domain only
     X1 = abs(X); %magnitude
     X1 = X1(2:end);
@@ -37,22 +37,10 @@ for i=1:len
 end
 
 for i=1:len
-    train_means(i,1) = rms(train(i,2:end));
-    test_means(i,1) = rms(test(i,2:end));
+    train_means(i,1) = mean(train(i,2:end));
+    test_means(i,1) = mean(test(i,2:end));train
 end
 
-for i=1:len
-    temp = sort(train(i,2:end),'descend');
-    train_maxV(i,:) = temp(1:3);
-    temp2 = sort(test(i,2:end),'descend');
-    test_maxV(i,:) = temp2(1:3);
-end
-
-train_features = [train_maxV,train_frequencies,train_means,train(:,1)];
-test_features = [test_maxV,test_frequencies,test_means,test(:,1)];
-
-csvwrite('train_features.txt',train_features)
-csvwrite('test_features.txt',test_features)
 
 %{
 figure
