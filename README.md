@@ -2,7 +2,7 @@
 
 2 finalized text files (train_features.txt, test_features.txt). Channels 1 and 2 voltages are added together to make a single signal per sample (row). 
 
-Features in columns include:
+Features include:
 
     1-3: Top 3 voltage values
     4-6: Top 3 peak frequencies
