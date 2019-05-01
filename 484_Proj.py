@@ -11,12 +11,7 @@ from sklearn import metrics
 def initialize():
     data = pd.read_csv("C:/Users/Kamil Adem/Downloads/CS484-master/CS484-master/train_features.txt", sep =",", header = None)
     test = pd.read_csv("C:/Users/Kamil Adem/Downloads/CS484-master/CS484-master/test_features.txt", sep = ",", header = None)
-  
-    mat = scipy.io.loadmat("C:/Users/Kamil Adem/Downloads/CS484-master/CS484-master/train.mat")
-    mat.pop('__header__')
-    mat.pop('__globals__')
-    mat.pop('__version__')
-    
+
     X_train = data.values[:,0:7]
     y_train = data.values[: ,7]
     X_test = test.values[:,0:7]
@@ -81,7 +76,8 @@ def SupportVector(X_train, y_train, X_test, y_test):
     print("Accuracy on training ", format(sv.score(X_train, y_train)*100))
     print("Accuracy on testing ", format(sv.score(X_test, y_test)*100))
     print("Accuracy is ", format(metrics.accuracy_score(y_test, y_predict)*100))
-    
+    return y_predict
+
 X_train, y_train, X_test, y_test, mat= initialize()
 RandomForest(X_train, y_train, X_test, y_test)
 NeuralNetwork(X_train, y_train, X_test, y_test)
