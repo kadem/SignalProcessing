@@ -7,17 +7,16 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 from sklearn import metrics
+from sklearn.model_selection import train_test_split
 
 def initialize():
-    data = pd.read_csv("C:/Users/Kamil Adem/Downloads/CS484-master/CS484-master/train_features.txt", sep =",", header = None)
-    test = pd.read_csv("C:/Users/Kamil Adem/Downloads/CS484-master/CS484-master/test_features.txt", sep = ",", header = None)
-
-    X_train = data.values[:,0:7]
-    y_train = data.values[: ,7]
-    X_test = test.values[:,0:7]
-    y_test = test.values[:, 7]
+    data = pd.read_csv("features_ch1.txt", sep =",", header = None)
     
-    return X_train, y_train, X_test, y_test, mat
+    X = data.values[:,  0:9]
+    y = data.values[:, 9]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state = 0)
+    return X_train, y_train, X_test, y_test
 
 def RandomForest(X_train, y_train, X_test, y_test):
     rf = RandomForestClassifier(n_estimators = 10000, max_depth = 10)
@@ -32,7 +31,7 @@ def RandomForest(X_train, y_train, X_test, y_test):
     return y_predict
 
 def NeuralNetwork(X_train, y_train, X_test, y_test):
-    nn = MLPClassifier(max_iter = 1000, activation = 'logistic')
+    nn = MLPClassifier(max_iter = 1000, activation = 'logistic', solver = 'lbfgs')
     nn.fit(X_train, y_train)
     y_predict = nn.predict(X_test)
     
@@ -78,7 +77,7 @@ def SupportVector(X_train, y_train, X_test, y_test):
     print("Accuracy is ", format(metrics.accuracy_score(y_test, y_predict)*100))
     return y_predict
 
-X_train, y_train, X_test, y_test, mat= initialize()
+X_train, y_train, X_test, y_test= initialize()
 RandomForest(X_train, y_train, X_test, y_test)
 NeuralNetwork(X_train, y_train, X_test, y_test)
 NearestNeighbor(X_train, y_train, X_test, y_test)
