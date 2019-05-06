@@ -9,15 +9,32 @@ from sklearn.svm import SVC
 from sklearn import metrics
 
 def initialize():
-    data = pd.read_csv("C:/Users/Kamil Adem/Downloads/CS484-master/CS484-master/train_features.txt", sep =",", header = None)
-    test = pd.read_csv("C:/Users/Kamil Adem/Downloads/CS484-master/CS484-master/test_features.txt", sep = ",", header = None)
-
-    X_train = data.values[:,0:7]
-    y_train = data.values[: ,7]
-    X_test = test.values[:,0:7]
-    y_test = test.values[:, 7]
+    #data = pd.read_csv("C:/Users/Kamil Adem/Downloads/CS484-master/CS484-master/train_features.txt", sep =",", header = None)
+    #test = pd.read_csv("C:/Users/Kamil Adem/Downloads/CS484-master/CS484-master/test_features.txt", sep = ",", header = None)
     
-    return X_train, y_train, X_test, y_test, mat
+    #data = pd.read_csv("data_features.txt", sep =",", header = None)
+    #test = pd.read_csv("data_features.txt", sep = ",", header = None)
+    
+    
+    data = pd.read_csv("final_features.txt", sep =",", header = None)
+    #test = pd.read_csv("Feature extraction/Feature extraction/full_features_ch1.txt", sep = ",", header = None)
+    
+    #data2 = pd.read_csv("Feature extraction/Feature extraction/full_features_ch2.txt", sep =",", header = None)
+    #test2 = pd.read_csv("Feature extraction/Feature extraction/full_features_ch2.txt", sep = ",", header = None)
+    
+    '''
+    X_train = data1.values[0:499,3000:3011]
+    y_train = data1.values[0:499 ,3011]
+    X_test = test1.values[500:899,3000:3011]
+    y_test = test1.values[500:899, 3011]
+    '''
+    X_train = data.values[0:599,0:17]
+    y_train = data.values[0:599 ,17]
+    X_test = data.values[600:899,0:17]
+    y_test = data.values[600:899, 17]
+    
+    
+    return X_train, y_train, X_test, y_test#, mat
 
 def RandomForest(X_train, y_train, X_test, y_test):
     rf = RandomForestClassifier(n_estimators = 10000, max_depth = 10)
@@ -78,7 +95,8 @@ def SupportVector(X_train, y_train, X_test, y_test):
     print("Accuracy is ", format(metrics.accuracy_score(y_test, y_predict)*100))
     return y_predict
 
-X_train, y_train, X_test, y_test, mat= initialize()
+#X_train, y_train, X_test, y_test, mat= initialize()
+X_train, y_train, X_test, y_test= initialize()
 RandomForest(X_train, y_train, X_test, y_test)
 NeuralNetwork(X_train, y_train, X_test, y_test)
 NearestNeighbor(X_train, y_train, X_test, y_test)
