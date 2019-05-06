@@ -3,36 +3,52 @@ load('train.mat')
 
 t = 0:0.002:6-0.002;
 
-nums1 = randi(450,450,1);
-nums2 = randi(450,450,1);
+nums = randi(900,900,1);
+%nums2 = randi(450,450,1);
 
-classes = zeros(450,1);
-classes(1:90,1) = 1;
-classes(91:180,1) = 2;
-classes(181:270,1) = 3;
-classes(271:360,1) = 4;
-classes(361:450,1) = 5;
-class_train = [nums1,classes];
-class_test = [nums2,classes];
+classes = zeros(900,1);
+classes(1:150,1) = 1;
+classes(151:300,1) = 2;
+classes(301:450,1) = 3;
+classes(451:600,1) = 4;
+classes(601:750,1) = 5;
+classes(751:900,1) = 6;
+classes = [nums,classes];
+%class_test = [nums2,classes];
 
-train_ch1 = [cyl_ch1_full(1:75,:);hook_ch1_full(1:75,:);lat_ch1_full(1:75,:);palm_ch1_full(1:75,:);spher_ch1_full(1:75,:);tip_ch1_full(1:75,:)];
-train_ch2 = [cyl_ch2_full(1:75,:);hook_ch2_full(1:75,:);lat_ch2_full(1:75,:);palm_ch2_full(1:75,:);spher_ch2_full(1:75,:);tip_ch2_full(1:75,:)];
+%data_ch1 = [cyl_ch1_full(1:75,:);hook_ch1_full(1:75,:);lat_ch1_full(1:75,:);palm_ch1_full(1:75,:);spher_ch1_full(1:75,:);tip_ch1_full(1:75,:)];
+%data_ch2 = [cyl_ch2_full(1:75,:);hook_ch2_full(1:75,:);lat_ch2_full(1:75,:);palm_ch2_full(1:75,:);spher_ch2_full(1:75,:);tip_ch2_full(1:75,:)];
 
-test_ch1 = [cyl_ch1_full(76:end,:);hook_ch1_full(76:end,:);lat_ch1_full(76:end,:);palm_ch1_full(76:end,:);spher_ch1_full(76:end,:);tip_ch1_full(76:end,:)];
-test_ch2 = [cyl_ch2_full(76:end,:);hook_ch2_full(76:end,:);lat_ch2_full(76:end,:);palm_ch2_full(76:end,:);spher_ch2_full(76:end,:);tip_ch2_full(76:end,:)];
+data_ch1 = [cyl_ch1_full;hook_ch1_full;lat_ch1_full;palm_ch1_full;spher_ch1_full;tip_ch1_full];
+data_ch2 = [cyl_ch2_full;hook_ch2_full;lat_ch2_full;palm_ch2_full;spher_ch2_full;tip_ch2_full];
 
-train_full = train_ch1+train_ch2;
-test_full = test_ch1+test_ch2;
+%test_ch1 = [cyl_ch1_full(76:end,:);hook_ch1_full(76:end,:);lat_ch1_full(76:end,:);palm_ch1_full(76:end,:);spher_ch1_full(76:end,:);tip_ch1_full(76:end,:)];
+%test_ch2 = [cyl_ch2_full(76:end,:);hook_ch2_full(76:end,:);lat_ch2_full(76:end,:);palm_ch2_full(76:end,:);spher_ch2_full(76:end,:);tip_ch2_full(76:end,:)];
 
-train_full = [class_train,train_full];
-test_full = [class_test,test_full];
+for i=1:900
+    data_full(i,:) = average_elems(data_ch1(i,:),data_ch2(i,:));
+end
+%data_full = data_ch1+data_ch2;
+%test_full = test_ch1+test_ch2;
 
-train_full = sortrows(train_full,1);
-test_full = sortrows(test_full,1);
+data_full = [classes,data_full];
+%test_full = [class_test,test_full];
 
-train_full = train_full(:,2:end);
-test_full = test_full(:,2:end);
+data_full = sortrows(data_full,1);
+%test_full = sortrows(test_full,1);
 
-csvwrite('train_full.txt',train_full)
-csvwrite('test_full.txt',test_full)
+data_full = data_full(:,2:end);
+%test_full = test_full(:,2:end);
+
+csvwrite('data_full.txt',data_full)
+%csvwrite('test_full.txt',test_full)
+
+function vec = average_elems(vec1, vec2)
+for i=1:length(vec1)
+    vec(i) = mean([vec1(i),vec2(i)]);
+end
+end
+
+
+
 
